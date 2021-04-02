@@ -68,7 +68,7 @@ const Dashboard: NextPage = () => (
       <Flex w="100%" maxWidth={1480} my="6" px="6">
         <C.Sidebar />
         <SimpleGrid flex="1" gap="4" minChildWidth={320} align="flex-start">
-          <Box p="8" bg="gray.800" borderRadius={8} pb="4">
+          <Box p={['4', '8']} bg="gray.800" borderRadius={8} pb={['2', '4']}>
             <Text fontSize="lg" mb="4">
               Incritos da semana
               <Chart
@@ -79,7 +79,7 @@ const Dashboard: NextPage = () => (
               />
             </Text>
           </Box>
-          <Box p="8" bg="gray.800" borderRadius={8} pb="4">
+          <Box p={['4', '8']} bg="gray.800" borderRadius={8} pb={['2', '4']}>
             <Text fontSize="lg" mb="4">
               Taxa de abertura
               <Chart

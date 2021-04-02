@@ -4,4 +4,4 @@ export { default as Sidebar } from './Sidebar'
 export { default as Pagination } from './Pagination'
 
 // ## Forms Components
-export { default as Input } from './Form/Input'
+export { Input } from './Form/Input'
