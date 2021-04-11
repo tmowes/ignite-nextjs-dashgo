@@ -1,2 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type PaginationProps = {}
+export type PaginationProps = {
+  totalCountOfRegisters: number
+  registersPerPage?: number
+  currentPage?: number
+  onPageChange: (page: number) => void
+}

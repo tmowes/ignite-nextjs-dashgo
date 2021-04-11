@@ -1,7 +1,9 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import { useForm } from 'react-hook-form'
+import { useMutation } from 'react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
 import {
   Box,
@@ -15,18 +17,36 @@ import {
 } from '@chakra-ui/react'
 
 import * as C from '~/components'
-import { CreateUserFormData } from '~/types'
+import { CreateUserData, CreateUserFormData } from '~/types'
 import { createUserSchema } from '~/utils/createUserSchema'
+import { api } from '~/services/api'
+import { queryClient } from '~/services/queryClient'
 
 const CreateUser: NextPage = () => {
+  const { push } = useRouter()
+  const createUser = useMutation(
+    async (user: CreateUserData) => {
+      const { data } = await api.post('users', {
+        user: {
+          ...user,
+          created_at: new Date().toISOString(),
+        },
+      })
+      return data.user
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('users')
+      },
+    }
+  )
   const { register, handleSubmit, formState, errors } = useForm({
     resolver: yupResolver(createUserSchema),
   })
 
-  const handleCreateUser: CreateUserFormData = async (data) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-    // eslint-disable-next-line no-console
-    console.log(data)
+  const handleCreateUser: CreateUserFormData = async (values) => {
+    await createUser.mutateAsync(values)
+    push('/users')
   }
 
   return (
